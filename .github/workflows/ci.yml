@@ -15,3 +15,9 @@ jobs:
     steps:
       - name: checkout codigo
         uses: actions/checkout@v4
+        
+      - name: Configurar nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-verson: "22"
+
