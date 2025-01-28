@@ -2,7 +2,9 @@ version: '3.7'
 
 services:
   api:
-    build: .
+    image: ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy
