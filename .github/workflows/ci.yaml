@@ -78,6 +78,11 @@ jobs:
             password: ${{ secrets.PASSWORD }}
             script: |
               cd ~/
+              # Adicionando variaveis de ambiente
               echo DOCKER_IMAGE_NAME=${{ secrets.DOCKERHUB_REPO}} > .env
               echo DOCKER_IMAGE_TAG=${{ needs.build.outputs.docker_tag }} >> .env
+              # Realizando login no registro Docker
+              docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+              # Removendo containers antigo e iniciando os novos
+              docker compose down
               docker compose up -d --build
