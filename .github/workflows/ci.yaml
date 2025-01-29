@@ -67,3 +67,14 @@ jobs:
             password: ${{ secrets.PASSWORD }}
             source: "./docker-compose.yaml"
             target: "~/"
+        
+        - name: Configure and Run
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USER }}
+            password: ${{ secrets.PASSWORD }}
+            script: |
+              cd ~/
+              {echo "DOCKER_IMAGE_NAME=${{ secrets.DOCKERHUB_REPO}}"; echo "DOCKER_IMAGE_TAG=${{ steps.generate_tag.outputs.sha }}"} > .env
+              docker compose up -d --build
